@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8">
+  <title>Studia</title>
+  <style>
+    html, body {
+      height: 100%;
+      margin: 0;
+      padding: 0;
+      zoom: 100%; 
+    }
+    body {
+      display: flex;
+      flex-direction: column;
+      font-family: Arial, sans-serif;
+      background: #f5f5f5;
+    }
+    header {
+      text-align: center;
+      padding: 20px;
+    }
+    header h1 {
+      margin: 0;
+      font-size: 48px;
+    }
+    .content {
+      flex: 1;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    .switches-wrapper {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 40px;
+    }
+    .switch-container {
+      display: flex;
+      align-items: center;
+      gap: 40px;
+    }
+    .toggle-switch {
+      position: relative;
+      width: 160px;
+      height: 88px;
+    }
+    .toggle-switch input {
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+    .slider {
+      position: absolute;
+      cursor: pointer;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      transition: .4s;
+      border-radius: 44px;
+    }
+    .slider:before {
+      position: absolute;
+      content: "";
+      height: 68px;
+      width: 68px;
+      left: 10px;
+      bottom: 10px;
+      background-color: white;
+      transition: .4s;
+      border-radius: 50%;
+    }
+    #switch1 + .slider {
+      background-color: #90EE90; 
+    }
+    #switch1:checked + .slider {
+      background-color: #006400; 
+    }
+    #switch2 + .slider {
+      background-color: #FF7F7F; 
+    }
+    #switch2:checked + .slider {
+      background-color: #8B0000; 
+    }
+    #switch3 + .slider {
+      background-color: #ADD8E6; 
+    }
+    #switch3:checked + .slider {
+      background-color: #00008B; 
+    }
+    #switch1:checked + .slider:before,
+    #switch2:checked + .slider:before,
+    #switch3:checked + .slider:before {
+      transform: translateX(72px);
+    }
+    .label-box {
+      width: 400px;
+      height: 88px;
+      background-color: inherit;
+      border: 2px solid;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-weight: bold;
+      border-radius: 5px;
+      font-size: 24px;
+    }
+    #label1 {
+      background-color: #006400;
+      border-color: #006400;
+      color: white;
+    }
+    #label2 {
+      background-color: #8B0000;
+      border-color: #8B0000;
+      color: white;
+    }
+    #label3 {
+      background-color: #00008B;
+      border-color: #00008B;
+      color: white;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>STUDIA</h1>
+  </header>
+  <div class="content">
+    <div class="switches-wrapper">
+      <div class="switch-container">
+        <label class="toggle-switch">
+          <input type="checkbox" id="switch1">
+          <span class="slider"></span>
+        </label>
+        <div class="label-box" id="label1">DOBRE OCENY</div>
+      </div>
+      <div class="switch-container">
+        <label class="toggle-switch">
+          <input type="checkbox" id="switch2">
+          <span class="slider"></span>
+        </label>
+        <div class="label-box" id="label2">DOBRY SEN</div>
+      </div>
+      <!-- Trzeci toggle switch (niebieski) -->
+      <div class="switch-container">
+        <label class="toggle-switch">
+          <input type="checkbox" id="switch3">
+          <span class="slider"></span>
+        </label>
+        <div class="label-box" id="label3">ZDROWIE PSYCHICZNE</div>
+      </div>
+    </div>
+  </div>
+  <script>
+    let activeSwitches = [];
+    const switches = document.querySelectorAll('input[type="checkbox"]');
+    
+    switches.forEach(switchElem => {
+      switchElem.addEventListener('change', function() {
+        if (this.checked) {
+          if (activeSwitches.length >= 2) {
+            const oldest = activeSwitches.shift();
+            oldest.checked = false;
+          }
+          activeSwitches.push(this);
+        } else {
+          const index = activeSwitches.indexOf(this);
+          if (index > -1) {
+            activeSwitches.splice(index, 1);
+          }
+        }
+      });
+    });
+  </script>
+</body>
+</html>
